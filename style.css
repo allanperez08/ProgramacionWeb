@@ -63,3 +63,19 @@ body {
   margin-bottom: 10px;
   cursor: pointer;
 }
+
+.login-form .register {
+  background-color: #42b72a;
+}
+
+.login-form a {
+  color: #1877f2;
+  text-align: center;
+  margin-bottom: 15px;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+hr {
+  margin: 20px 0;
+}
