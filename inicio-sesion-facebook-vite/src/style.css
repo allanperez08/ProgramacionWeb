@@ -89,3 +89,24 @@ hr {
   background-color: #dddfe2;
   margin: 10px 0;
 }
+
+.create-account-btn {
+  background-color: #42b72a;
+  color: white;
+  font-size: 1rem;
+  padding: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.create-account-btn:hover {
+  background-color: #36a420;
+}
+
+.create-page {
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 20px;
+}
