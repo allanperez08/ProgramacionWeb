@@ -18,3 +18,19 @@ body {
   height: 100vh;
   padding: 20px;
 }
+
+.left {
+  flex: 1;
+  padding: 20px;
+}
+
+.left h1 {
+  color: #1877f2;
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.left p {
+  font-size: 1.5rem;
+  max-width: 500px;
+}
