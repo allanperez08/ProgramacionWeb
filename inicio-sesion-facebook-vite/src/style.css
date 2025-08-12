@@ -71,3 +71,21 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
+
+.login-btn:hover {
+  background-color: #165cdb;
+}
+
+.forgot-password {
+  text-align: center;
+  color: #1877f2;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+hr {
+  border: none;
+  height: 1px;
+  background-color: #dddfe2;
+  margin: 10px 0;
+}
