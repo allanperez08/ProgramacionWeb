@@ -72,3 +72,18 @@ function App() {
     }
     setLoading(false);
   };
+
+  // Botón Siguiente
+  const handleNext = () => {
+    setOffset(offset + limit);
+    setPage(page + 1);
+    fetchPokemons();
+  };
+
+  // Botón Anterior
+  const handlePrev = () => {
+    if (offset === 0) return;
+    setOffset(offset - limit);
+    setPage(page - 1);
+    fetchPokemons();
+  };
