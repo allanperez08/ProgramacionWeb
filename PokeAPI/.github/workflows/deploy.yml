@@ -1,70 +1,45 @@
-name: Deploy Pokémon App
+name: Deploy to PokemonApi
 
 on:
   push:
     branches:
       - assessment-1
-  workflow_dispatch:   # permite ejecutar manualmente desde GitHub Actions
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-    # 1️⃣ Checkout del código
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # 2️⃣ Setup Node.js
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
 
-    # 3️⃣ Instalar dependencias
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    # 4️⃣ Build del proyecto con Vite
-    - name: Build project
-      run: npm run build
+      - name: Build project
+        run: npm run build
 
-    # 5️⃣ Setup Doppler
-    - name: Setup Doppler
-      uses: dopplerhq/cli-action@v3
-      with:
-        token: ${{ secrets.DOPPLER_TOKEN }}
-        project: assessment-1   # tu proyecto en Doppler
-        config: production      # entorno Doppler
+      - name: Upload to S3
+        uses: aws-actions/s3-sync@v2
+        with:
+          bucket: ${{ secrets.S3_BUCKET }}
+          region: ${{ secrets.AWS_REGION }}
+          source-dir: ./dist
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-    # 6️⃣ Exportar secretos de Doppler como variables de entorno
-    - name: Export Doppler secrets
-      run: |
-        eval $(doppler secrets download --no-file --format env)
-
-    # 7️⃣ Configurar credenciales de AWS
-    - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
-    # 8️⃣ Subir carpeta dist/ al bucket S3
-    - name: Upload dist to S3
-      run: aws s3 sync dist/ s3://$S3_BUCKET --delete
-      env:
-        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ env.AWS_REGION }}
-        S3_BUCKET: ${{ env.S3_BUCKET }}
-
-    # 9️⃣ Invalidar caché de CloudFront
-    - name: Invalidate CloudFront cache
-      run: aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
-      env:
-        AWS_ACCESS_KEY_ID: ${{ env.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ env.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ env.AWS_REGION }}
-        CLOUDFRONT_DISTRIBUTION_ID: ${{ env.CLOUDFRONT_DISTRIBUTION_ID }}
+      - name: Invalidate CloudFront cache
+        uses: awact/cloudfront-action@v1
+        with:
+          distribution-id: ${{ secrets.CLOUDFRONT_DISTRIBUTION_ID }}
+          paths: "/*"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
