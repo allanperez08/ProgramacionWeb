@@ -87,3 +87,45 @@ function App() {
     setPage(page - 1);
     fetchPokemons();
   };
+
+  return (
+    <div className="AppPokemon">
+      <h1>Mi Pokedex</h1>
+
+      {/* Cuadro de búsqueda */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Buscar Pokémon por nombre"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button onClick={handleSearch} disabled={loading}>
+          Buscar
+        </button>
+        <button
+          onClick={() => {
+            setSearch("");
+            setOffset(0);
+            setPage(1);
+            fetchPokemons();
+          }}
+          disabled={loading}
+        >
+          Reset
+        </button>
+      </div>
+
+      {/* Botones de paginación y indicador de página */}
+      <div className="pagination-buttons">
+        <button onClick={handlePrev} disabled={offset === 0 || loading}>
+          Anterior
+        </button>
+        <span className="page-indicator">Página {page}</span>
+        <button onClick={handleNext} disabled={loading}>
+          Siguiente {limit}
+        </button>
+      </div>
+
+      {/* Mensaje si no se encuentra Pokémon */}
+      {notFound && <p className="not-found">¡Pokémon no encontrado!</p>}
