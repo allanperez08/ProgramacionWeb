@@ -76,3 +76,8 @@ button:hover {
   border-radius: 5px;
   border: 1px solid #ccc;
 }
+
+/* Botones de paginación */
+.pagination-buttons {
+  margin-bottom: 20px;
+}
