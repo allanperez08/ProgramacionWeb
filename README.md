@@ -1,12 +1,16 @@
-# React + Vite
+Captura de pantalla de la pestaña "Config Syncs" de Doppler mostrando la integración con su repositorio.
+![Config Syncs](image.png)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Captura de pantalla de sus variables de Doppler (ocultando valores).
+![Variables Doppler](image-1.png)
 
-Currently, two official plugins are available:
+Captura de pantalla de los secretos en GitHub.
+![GitHub secrets](image-2.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Captura de la aplicación mostrando las tarjetas de Pokémon.
+![alt text](image-3.png)
+![alt text](image-4.png)
+![alt text](image-5.png)
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+URL pública del CDN de CloudFront para acceder a la aplicación.
+https://d1y36k5xpawqpd.cloudfront.net/index.html
