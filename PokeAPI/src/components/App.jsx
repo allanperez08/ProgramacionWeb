@@ -41,3 +41,34 @@ function App() {
     }
     setLoading(false);
   };
+
+  // Función para cargar Pokémon con paginación
+  const fetchPokemons = async () => {
+    setLoading(true);
+    setNotFound(false);
+    try {
+      const response = await fetch(
+        `https://pokeapi.co/api/v2/pokemon?offset=${offset}&limit=${limit}`
+      );
+      const data = await response.json();
+
+      const pokemonDetails = await Promise.all(
+        data.results.map(async (p) => {
+          const res = await fetch(p.url);
+          const pokeData = await res.json();
+          return {
+            id: pokeData.id,
+            name: pokeData.name,
+            img: pokeData.sprites.other["official-artwork"].front_default,
+            types: pokeData.types.map((t) => t.type.name),
+            abilities: pokeData.abilities.map((a) => a.ability.name),
+          };
+        })
+      );
+
+      setPokemons(pokemonDetails);
+    } catch (error) {
+      console.error("Error fetching pokemons:", error);
+    }
+    setLoading(false);
+  };
