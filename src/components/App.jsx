@@ -115,3 +115,38 @@ function App() {
           Reset
         </button>
       </div>
+
+      {/* Botones de paginación y indicador de página */}
+      <div className="pagination-buttons">
+        <button onClick={handlePrev} disabled={offset === 0 || loading}>
+          Anterior
+        </button>
+        <span className="page-indicator">Página {page}</span>
+        <button onClick={handleNext} disabled={loading}>
+          Siguiente {limit}
+        </button>
+      </div>
+
+      {/* Mensaje si no se encuentra Pokémon */}
+      {notFound && <p className="not-found">¡Pokémon no encontrado!</p>}
+
+      {/* Grid de tarjetas */}
+      <div className="pokemon-grid">
+        {pokemons.map((poke) => (
+          <div key={poke.id} className="pokemon-card">
+            <img src={poke.img} alt={poke.name} className="pokemon-img" />
+            <h2>{poke.name}</h2>
+            <p>
+              <strong>Tipo:</strong> {poke.types.join(", ")}
+            </p>
+            <p>
+              <strong>Habilidades:</strong> {poke.abilities.join(", ")}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
