@@ -129,3 +129,24 @@ function App() {
 
       {/* Mensaje si no se encuentra Pokémon */}
       {notFound && <p className="not-found">¡Pokémon no encontrado!</p>}
+
+      {/* Grid de tarjetas */}
+      <div className="pokemon-grid">
+        {pokemons.map((poke) => (
+          <div key={poke.id} className="pokemon-card">
+            <img src={poke.img} alt={poke.name} className="pokemon-img" />
+            <h2>{poke.name}</h2>
+            <p>
+              <strong>Tipo:</strong> {poke.types.join(", ")}
+            </p>
+            <p>
+              <strong>Habilidades:</strong> {poke.abilities.join(", ")}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default App;
