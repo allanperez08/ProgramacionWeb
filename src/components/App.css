@@ -58,3 +58,20 @@ button {
   font-weight: bold;
   transition: background-color 0.2s;
 }
+
+button:hover {
+  background-color: #21a1f1;
+}
+
+/* Cuadro de búsqueda */
+.search-container {
+  margin-bottom: 15px;
+}
+
+.search-container input {
+  padding: 8px;
+  width: 200px;
+  margin-right: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
