@@ -32,7 +32,8 @@ jobs:
         config: production      # <-- entorno de Doppler
 
     - name: Export Doppler secrets
-      run: doppler run --no-command
+       run: |
+       eval $(doppler secrets download --no-file --format env)
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v2
