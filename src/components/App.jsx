@@ -79,3 +79,39 @@ function App() {
     setPage(page + 1);
     fetchPokemons();
   };
+
+  // Botón Anterior
+  const handlePrev = () => {
+    if (offset === 0) return;
+    setOffset(offset - limit);
+    setPage(page - 1);
+    fetchPokemons();
+  };
+
+  return (
+    <div className="AppPokemon">
+      <h1>Mi Pokedex</h1>
+
+      {/* Cuadro de búsqueda */}
+      <div className="search-container">
+        <input
+          type="text"
+          placeholder="Buscar Pokémon por nombre"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button onClick={handleSearch} disabled={loading}>
+          Buscar
+        </button>
+        <button
+          onClick={() => {
+            setSearch("");
+            setOffset(0);
+            setPage(1);
+            fetchPokemons();
+          }}
+          disabled={loading}
+        >
+          Reset
+        </button>
+      </div>
