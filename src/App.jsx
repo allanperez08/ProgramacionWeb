@@ -22,3 +22,13 @@ const App = () => {
     setTasks([...tasks, newTask]);
     setTaskName('');
   };
+
+  const deleteTask = (id) => setTasks(tasks.filter(t => t.id !== id));
+  const toggleTask = (id) => setTasks(tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t));
+
+  const filteredTasks = tasks.filter(task => {
+    if (filter === 'all') return true;
+    if (filter === 'pending') return !task.completed;
+    if (filter === 'completed') return task.completed;
+    return true;
+  });
