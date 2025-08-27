@@ -67,3 +67,41 @@ h1 {
   gap: 15px;
   margin-bottom: 25px;
 }
+
+.filters button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s;
+  background-color: #fff;
+  color: #333;
+  font-weight: bold;
+}
+
+.filters button.active {
+  background-color: #1877f2;
+  color: white;
+  border: none;
+}
+
+.filters button:hover:not(.active) {
+  background-color: #e4e6eb;
+}
+
+.task-list .task {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #696666;
+  transition: background-color 0.2s;
+}
+
+.task-list .task span {
+  flex: 1;
+  margin-left: 12px;
+  cursor: pointer;
+}
