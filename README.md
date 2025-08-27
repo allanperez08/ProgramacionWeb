@@ -1,12 +1,32 @@
-# React + Vite
+Hook Used
+1. useState
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+const [tasks, setTasks] = useState([]);
+const [filter, setFilter] = useState("all");
 
-Currently, two official plugins are available:
+We used useState to store the main state of the application:
+tasks: contains all tasks (each with id, name, and status).
+filter: determines which tasks should be displayed (all, pending, completed).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. useEffect
 
-## Expanding the ESLint configuration
+useEffect(() => {
+  const storedTasks = localStorage.getItem("tasks");
+  if (storedTasks) {
+    setTasks(JSON.parse(storedTasks));
+  }
+}, []);
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}, [tasks]);
+
+Justification:
+We used useEffect for side effects:
+Load tasks from localStorage when the app starts (first render).
+Save tasks in localStorage whenever the tasks state changes.
+This ensures that the application keeps its state persistent, even if the page is refreshed.
+
+
+CDN funcional y con URL en el README.md para poder acceder.
+https://dqxp8j86taz06.cloudfront.net/index.html
