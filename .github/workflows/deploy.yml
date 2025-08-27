@@ -1,4 +1,4 @@
-name: Deploy hw04
+name: Deploy hw-04
 
 on:
   push:
