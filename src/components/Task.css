@@ -30,3 +30,30 @@
   position: relative;
   flex-shrink: 0;
 }
+
+.task.completed .circle {
+  background-color: #1877f2;
+}
+
+.task.completed .circle::after {
+  content: "✔";
+  color: rgb(0, 0, 0);
+  position: absolute;
+  top: -2px;
+  left: 2px;
+  font-size: 14px;
+}
+
+.task button {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.task button:hover {
+  background-color: #d32f2f;
+}
