@@ -32,3 +32,28 @@ const App = () => {
     if (filter === 'completed') return task.completed;
     return true;
   });
+
+  return (
+    <div className="app">
+      <h1>Gestión de Tareas</h1>
+      <div className="task-input">
+        <input type="text" placeholder="Nueva tarea" value={taskName} onChange={e => setTaskName(e.target.value)} />
+        <button onClick={addTask}>Agregar</button>
+      </div>
+
+      <div className="filters">
+        <button onClick={() => setFilter('all')} className={filter==='all'?'active':''}>Todas</button>
+        <button onClick={() => setFilter('pending')} className={filter==='pending'?'active':''}>Pendientes</button>
+        <button onClick={() => setFilter('completed')} className={filter==='completed'?'active':''}>Completadas</button>
+      </div>
+
+      <div className="task-list">
+        {filteredTasks.length === 0 ? <p>No hay tareas</p> :
+          filteredTasks.map(task => <Task key={task.id} task={task} toggleTask={toggleTask} deleteTask={deleteTask} />)
+        }
+      </div>
+    </div>
+  );
+};
+
+export default App;
