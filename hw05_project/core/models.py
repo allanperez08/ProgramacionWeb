@@ -21,3 +21,12 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Review(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    review_text = models.TextField()
+    rating = models.IntegerField(default=1)
+
+    def __str__(self):
+        return f"Review for {self.book.title}"
+
