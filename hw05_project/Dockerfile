@@ -1,34 +1,29 @@
-# Dockerfile (usando Python 3.11 slim)
 FROM python:3.11-slim
 
-# Evitar prompts al instalar paquetes
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Instalar dependencias de sistema
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
+    default-libmysqlclient-dev \
+    pkg-config \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear usuario no-root
+
+# 3. Crear usuario no root
 RUN groupadd --system appgroup && useradd --system --create-home --gid appgroup appuser
 
+# 4. Establecer directorio de trabajo
 WORKDIR /app
 
-# Copiar requirements e instalar
-COPY requirements.txt .
+# 5. Copiar requirements e instalar librerías de Python
+COPY requirements-docker.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar todo el proyecto
+# 6. Copiar todo el proyecto
 COPY . .
 
-# Dar permisos al usuario
-RUN chown -R appuser:appgroup /app
-
-# Cambiar a usuario no-root
+# 7. Cambiar a usuario no root
 USER appuser
 
-EXPOSE 8000
-
-# Arrancar Gunicorn (el servidor WSGI)
-CMD ["gunicorn", "hw05_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+# 8. Comando por defecto
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
