@@ -5,4 +5,3 @@ from .models import Author, Book, Publisher, Review
 admin.site.register(Author)
 admin.site.register(Book)
 admin.site.register(Publisher)
-admin.site.register(Review)
