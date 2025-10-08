@@ -8,27 +8,22 @@ class Author(models.Model):
         return self.name
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
-    publication_date = models.DateField()
+    title = models.CharField(max_length=150)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
-    
-    
+
 class Publisher(models.Model):
-    name = models.CharField(max_length=150)
-    website = models.URLField(blank=True)
+    name = models.CharField(max_length=100)
+    books = models.ForeignKey(Book, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
 
 class Review(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    reviewer_name = models.CharField(max_length=100)
-    rating = models.IntegerField()
-    comment = models.TextField(blank=True)
-    date_created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
 
     def __str__(self):
-        return f"{self.reviewer_name} - {self.book.title}"
+        return f"Review for {self.book.title}"
