@@ -48,3 +48,24 @@ function App() {
             </p>
           )}
         </div>
+      ) : (
+        <div className="tab-content">
+          <input
+            type="text"
+            placeholder="Ingresa la clave"
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+          />
+          <button onClick={handleReveal}>Revelar</button>
+          {revealed && (
+            <p>
+              🔍 Secreto: <b>{revealed}</b>
+            </p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
