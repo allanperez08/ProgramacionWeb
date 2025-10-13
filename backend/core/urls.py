@@ -20,6 +20,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from links.views import SecretLinkViewSet
+from django.urls import path
+from links.views import HideSecretView, RevealSecretView
 
 router = DefaultRouter()
 router.register(r'links', SecretLinkViewSet)
@@ -28,4 +30,6 @@ router.register(r'links', SecretLinkViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('api/hide/', HideSecretView.as_view(), name='hide_secret'),
+    path('api/reveal/', RevealSecretView.as_view(), name='reveal_secret'),
 ]
