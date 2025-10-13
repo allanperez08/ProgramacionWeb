@@ -1,9 +1,14 @@
+version: '3.8'
+
 services:
   redis:
-    image: redis:latest
+    image: redis:7-alpine
     ports:
       - "6379:6379"
-    restart: always
+    volumes:
+      - redis_data:/data
+    networks:
+      - app-network
 
   redis-commander:
     image: rediscommander/redis-commander:latest
@@ -11,14 +16,38 @@ services:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - "8081:8081"
-    restart: always
-
-  backend:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/code
-    ports:
-      - "8000:8000"
     depends_on:
       - redis
+    networks:
+      - app-network
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  redis_data:
+
+networks:
+  app-network:
+    driver: bridge
+    
