@@ -84,3 +84,17 @@ body {
   text-align: center;
   width: 400px;
 }
+
+.tabs button {
+  margin: 0 10px;
+  padding: 0.5rem 1rem;
+  background: #ff6600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+}
+
+.tabs button:hover {
+  background: #ff7b1a;
+}
