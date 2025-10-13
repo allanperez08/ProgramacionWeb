@@ -18,3 +18,10 @@ function App() {
     const data = await response.json();
     setKey(data.key);
   };
+  
+  // Revelar secreto usando key
+  const handleReveal = async () => {
+    const response = await fetch(`http://localhost:8000/api/reveal/${key}/`);
+    const data = await response.json();
+    setRevealed(data.secret || data.error);
+  };
