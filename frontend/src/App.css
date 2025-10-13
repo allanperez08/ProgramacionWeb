@@ -214,6 +214,34 @@ button:disabled {
   animation: fadeIn 0.5s ease;
 }
 
+/* TEXTO INFORMATIVO */
+.info-text {
+  color: #666;
+  text-align: center;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+}
+
+/* ANIMACIÓN PARA LIMPIAR MENSAJES */
+.fade-out {
+  animation: fadeOut 0.5s ease;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .app {

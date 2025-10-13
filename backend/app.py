@@ -1,4 +1,3 @@
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import redis
@@ -13,6 +12,9 @@ redis_host = os.getenv('REDIS_HOST', 'localhost')
 redis_port = int(os.getenv('REDIS_PORT', 6379))
 redis_client = redis.Redis(host=redis_host, port=redis_port, db=0, decode_responses=True)
 
+# Tiempo de expiración en segundos (10 minutos)
+SECRET_EXPIRATION = 10 * 60  # 10 minutos
+
 @app.route('/api/store', methods=['POST'])
 def store_secret():
     try:
@@ -25,10 +27,14 @@ def store_secret():
         # Generar key única
         key = str(uuid.uuid4())
         
-        # Guardar en Redis
-        redis_client.set(key, secret)
+        # Guardar en Redis con expiración de 10 minutos
+        redis_client.setex(key, SECRET_EXPIRATION, secret)
         
-        return jsonify({'key': key}), 200
+        return jsonify({
+            'key': key,
+            'expires_in': SECRET_EXPIRATION,
+            'message': 'Secret stored successfully. It will expire in 10 minutes.'
+        }), 200
         
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -40,7 +46,7 @@ def retrieve_secret(key):
         secret = redis_client.get(key)
         
         if secret is None:
-            return jsonify({'error': 'Secret not found or already viewed'}), 404
+            return jsonify({'error': 'Secret not found, already viewed, or expired'}), 404
         
         # Eliminar el secreto después de leerlo
         redis_client.delete(key)

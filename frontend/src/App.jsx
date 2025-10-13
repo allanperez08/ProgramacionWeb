@@ -12,6 +12,13 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
+  // Función para cambiar de pestaña y limpiar mensajes
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setResult('')
+    setError('')
+  }
+
   const handleStoreSecret = async () => {
     if (!secret.trim()) {
       setError('Please enter a secret')
@@ -20,6 +27,7 @@ function App() {
 
     setLoading(true)
     setError('')
+    setResult('')
     
     try {
       const response = await axios.post(`${API_URL}/api/store`, {
@@ -43,6 +51,7 @@ function App() {
 
     setLoading(true)
     setError('')
+    setResult('')
     
     try {
       const response = await axios.get(`${API_URL}/api/retrieve/${key}`)
@@ -65,13 +74,13 @@ function App() {
       <div className="tabs">
         <button 
           className={`tab ${activeTab === 'hide' ? 'active' : ''}`}
-          onClick={() => setActiveTab('hide')}
+          onClick={() => handleTabChange('hide')}
         >
           Hide Secret
         </button>
         <button 
           className={`tab ${activeTab === 'reveal' ? 'active' : ''}`}
-          onClick={() => setActiveTab('reveal')}
+          onClick={() => handleTabChange('reveal')}
         >
           Reveal Secret
         </button>
@@ -81,6 +90,7 @@ function App() {
         {activeTab === 'hide' && (
           <div className="tab-content">
             <h2>Hide a Secret</h2>
+            <p className="info-text">Your secret will be available for 10 minutes and can only be viewed once.</p>
             <textarea
               value={secret}
               onChange={(e) => setSecret(e.target.value)}
@@ -91,7 +101,7 @@ function App() {
               onClick={handleStoreSecret} 
               disabled={loading}
             >
-              {loading ? 'Hiding...' : 'Hide Secret'}
+              {loading ? '🔄 Creating Secure Link...' : '🔒 Create Secure Link'}
             </button>
           </div>
         )}
@@ -99,6 +109,7 @@ function App() {
         {activeTab === 'reveal' && (
           <div className="tab-content">
             <h2>Reveal a Secret</h2>
+            <p className="info-text">Enter the key to reveal the secret. It will be deleted after viewing.</p>
             <input
               type="text"
               value={key}
@@ -109,7 +120,7 @@ function App() {
               onClick={handleRetrieveSecret} 
               disabled={loading}
             >
-              {loading ? 'Revealing...' : 'Reveal Secret'}
+              {loading ? '🔄 Revealing Secret...' : '🔓 Reveal Secret Once'}
             </button>
           </div>
         )}
@@ -131,4 +142,3 @@ function App() {
 }
 
 export default App
-
